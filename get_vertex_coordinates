@@ -1,0 +1,10 @@
+# use update cursor to get vertex coordinates of feature class
+desc = arcpy.Describe(input_fc)
+shape_field_name = desc.ShapeFieldName
+test_for_coords = arcpy.UpdateCursor(input_fc)
+for coord in test_for_coords:
+    sample = coord.getValue(shape_field_name)
+    for item in sample:
+        for pair in item:
+            print pair.X, pair.Y
+del test_for_coords
