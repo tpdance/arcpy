@@ -1,0 +1,23 @@
+# try and check out ArcInfo License
+class LicenseException(Exception):
+    pass
+
+try:
+    status = arcpy.CheckProduct('ArcInfo')
+    if status == 'CheckedOut':
+        pass
+    if status == 'Already Initialized':
+        pass
+    if status == 'NotLicensed':
+        raise LicenseException(status)
+    if status == 'Failed':
+        raise LicenseException(status)
+except LicenseException:
+    print "I'm sorry, you don't have the correct license level. Please contact support."
+
+# try and convert lines to polygons
+if arcpy.CheckProduct("ArcInfo") == "Available":
+    output_fc = out_space + "\smoke_model.shp"
+    arcpy.FeatureToPolygon_management(smoke_lines, output_fc, "", "NO_ATTRIBUTES", "")
+else:
+    print "Something went wrong :( Please contact support."
